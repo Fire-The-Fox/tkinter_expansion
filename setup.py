@@ -11,6 +11,7 @@ setup(
   description = 'Python package that extends tkinter with custom Designer',
   long_description_content_type="text/markdown",
   long_description=README,
+  download_url="https://github.com/Fire-The-Fox/tkinter_expansion
   author = 'Fire-The-Fox',
   author_email = 'gajdos.jan77@gmail.com',
   keywords = ['TKINTER', 'DESIGNER'],
