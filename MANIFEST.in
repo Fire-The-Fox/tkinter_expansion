@@ -1,2 +1,0 @@
-graft tkinter_expansion
-global-exclude *.py[cod]
