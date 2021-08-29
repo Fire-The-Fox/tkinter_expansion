@@ -1,3 +1,7 @@
-# tkinter_expansion
+Tkinter expansion
 
-Fixing important security issues. Come back later please!
+python framework that expands tkinter
+
+please visit docs for better usage and explanation
+
+https://fire-the-fox.github.io/tkinter_expansion_docs/
