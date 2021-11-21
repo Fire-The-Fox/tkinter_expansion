@@ -35,7 +35,7 @@ class Designer:
         self.selected = ""
         self.changed_widgets = {"": {"": ""}}
         self.changed_widgets = {}
-        self.rgb_value = (0, 0, 0)
+        self.rgb_value = ()
         self.var_data = None
         self.name = "default"
         self.var_name_data = ""
