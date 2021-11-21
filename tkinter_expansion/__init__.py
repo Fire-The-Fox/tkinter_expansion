@@ -35,6 +35,7 @@ class Designer:
         self.red_color = tk.StringVar()
         self.green_color = tk.StringVar()
         self.blue_color = tk.StringVar()
+        self._term_i = None
         self.__color_data = ["activebackground",
                              "activeforeground",
                              "background",
