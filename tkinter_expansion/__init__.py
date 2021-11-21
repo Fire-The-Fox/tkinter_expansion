@@ -12,8 +12,7 @@ tmp_top = None
 class DesignerThemeNotFound(Exception):
     """ This exception is raised when Designer didn't find specific theme. """
 
-    def __init__(self):
-        super().__init__()
+    pass
 
 
 class Designer:
