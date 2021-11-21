@@ -8,7 +8,8 @@ setup(
     name='tkinter_expansion',
     version='0.1.90',
     license='MIT',
-    description='Python framework that is heavily inspired by JavaFX and makes creating apps easier',
+    description='Python framework that is heavily inspired by JavaFX and makes '
+                'creating apps easier',
     long_description_content_type="text/markdown",
     long_description=readme,
     url="https://fire-the-fox.github.io/tkinter_expansion_docs/",
