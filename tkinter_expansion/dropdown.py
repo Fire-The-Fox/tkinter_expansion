@@ -7,7 +7,7 @@ class Dropdown(tk.Button):
         self.kw = {"master": None, "text": kwargs["data"][0], "data": [],
                    "font": ("Ubuntu", 12), "relief": "sunken",
                    "variable": None, "bd": 0,
-                   "command": self.unpack, "maximum": 0, "pack_cmd": self.__ignore}
+                   "command": self.unpack, "maximum": 0, "pack_cmd": lambda: None}
         self.kw.update(kwargs)
         self.kwd = {}
         for i in self.kw:
@@ -70,6 +70,3 @@ class Dropdown(tk.Button):
                 continue
             self.kwd[i] = self.kw[i]
         self.redraw_top()
-
-    def __ignore(self):
-        pass
