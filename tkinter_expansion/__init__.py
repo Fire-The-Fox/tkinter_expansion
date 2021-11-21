@@ -54,7 +54,7 @@ class Designer:
                                  "orient"]
 
         self._all_available_kwargs = ["master", "width", "height", "title", "show"]
-        self.kwargs = {"master": lambda: tk.Tk(),
+        self.kwargs = {"master": tk.Tk,
                        "width": 400,
                        "height": 500,
                        "title": "Tkinter expansion designer",
@@ -365,7 +365,7 @@ class Designer:
         :return:
         """
         if self.show:
-            widget.bind("<Button-3>", lambda event: self.__select_widget(event))
+            widget.bind("<Button-3>", self.__select_widget)
             widget.bind_all("<Escape>", lambda event: self.__un_select())
 
     def bind_to(self, widgets: list):
@@ -376,7 +376,7 @@ class Designer:
         """
         for i in widgets:
             if self.show:
-                i.bind("<Button-3>", lambda event: self.__select_widget(event))
+                i.bind("<Button-3>", self.__select_widget)
                 i.bind_all("<Escape>", lambda event: self.__un_select())
 
 
