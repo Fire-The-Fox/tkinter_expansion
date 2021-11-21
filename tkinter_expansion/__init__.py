@@ -29,6 +29,7 @@ class Designer:
         self.var_name_data = None
         self.Thread1 = None
         self.args = args
+        self.apply_text = ""
         self.check_var = tk.StringVar()
         self.behaviour = tk.StringVar()
         self.__color_data = ["activebackground",
@@ -75,7 +76,7 @@ class Designer:
 
         self.ColorChoicePanel = tk.Label(self.window, background="#444444")
         self.ColorChoicePanel.place(x=0, y=0, relheight=0.25,
-                                    width=self.kwargs["width"])
+                                    width=int(self.kwargs["width"]))
         self.ColorRedText = tk.Label(self.ColorChoicePanel, text="Red",
                                      background="#444444", fg="#ffffff")
         self.ColorRedText.place(anchor="ne", x=275, y=25)
