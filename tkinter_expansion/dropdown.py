@@ -74,7 +74,7 @@ class Dropdown(tk.Button):
             self["text"] = self.kw["variable"].get() + " ▼"
 
     def redraw_top(self):
-        """ This function will redraw top part of Dropdown widget. """
+        """This function will redraw top part of Dropdown widget."""
         self.kw["text"] = self.kw["data"][0]
         self["text"] = self.kw["text"] + " ▼"
         self.kw["variable"].set(self.kw["data"][0])
