@@ -1,4 +1,5 @@
 # Tkinter expansion
+[![DeepSource](https://deepsource.io/gh/Fire-The-Fox/tkinter_expansion.svg/?label=active+issues&show_trend=true&token=FAV3919W-CcPmEBiOdAsKj-K)](https://deepsource.io/gh/Fire-The-Fox/tkinter_expansion/?ref=repository-badge)
 
 **`python framework that expands tkinter with a bunch of cool stuff.`**
 
