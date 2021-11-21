@@ -32,6 +32,9 @@ class Designer:
         self.apply_text = ""
         self.check_var = tk.StringVar()
         self.behaviour = tk.StringVar()
+        self.red_color = tk.StringVar()
+        self.green_color = tk.StringVar()
+        self.blue_color = tk.StringVar()
         self.__color_data = ["activebackground",
                              "activeforeground",
                              "background",
@@ -81,7 +84,7 @@ class Designer:
                                      background="#444444", fg="#ffffff")
         self.ColorRedText.place(anchor="ne", x=275, y=25)
         self.ColorRedInput = tk.Entry(self.ColorChoicePanel, background="#555555", bd=0,
-                                      fg="#ffffff",
+                                      fg="#ffffff", textvariable=self.red_color,
                                       selectbackground="#ffffff",
                                       disabledbackground="#111111",
                                       disabledforeground="#ffffff")
@@ -91,6 +94,7 @@ class Designer:
         self.ColorGreenText.place(anchor="ne", x=275, y=60)
         self.ColorGreenInput = tk.Entry(self.ColorChoicePanel, background="#555555",
                                         bd=0, fg="#ffffff",
+                                        textvariable=self.green_color,
                                         selectbackground="#ffffff",
                                         disabledbackground="#111111",
                                         disabledforeground="#ffffff")
@@ -100,6 +104,7 @@ class Designer:
         self.ColorBlueText.place(anchor="ne", x=275, y=95)
         self.ColorBlueInput = tk.Entry(self.ColorChoicePanel, background="#555555",
                                        bd=0, fg="#ffffff",
+                                       textvariable=self.blue_color,
                                        selectbackground="#ffffff",
                                        disabledbackground="#111111",
                                        disabledforeground="#ffffff")
@@ -113,18 +118,9 @@ class Designer:
         self.ColorGreenInput.insert(0, "0")
         self.ColorBlueInput.insert(0, "0")
 
-        self.ColorRedInput.bind("<KeyRelease>", lambda _: self.Color.configure(
-            background=self.__get_rgb(self.ColorRedInput,
-                                      self.ColorGreenInput,
-                                      self.ColorBlueInput)))
-        self.ColorGreenInput.bind("<KeyRelease>", lambda _: self.Color.configure(
-            background=self.__get_rgb(self.ColorRedInput,
-                                      self.ColorGreenInput,
-                                      self.ColorBlueInput)))
-        self.ColorBlueInput.bind("<KeyRelease>", lambda _: self.Color.configure(
-            background=self.__get_rgb(self.ColorRedInput,
-                                      self.ColorGreenInput,
-                                      self.ColorBlueInput)))
+        self.red_color.trace("w", lambda *_: self.__change_color_example())
+        self.green_color.trace("w", lambda *_: self.__change_color_example())
+        self.blue_color.trace("w", lambda *_: self.__change_color_example())
 
         self.Name = tk.Label(self.window, text="Name: ", bg="#333333", fg="#ffffff")
         self.Name.place(x=15, rely=0.26)
@@ -173,6 +169,11 @@ class Designer:
             self.window.destroy()
 
         self.show = self.kwargs["show"]
+
+    def __change_color_example(self):
+        self.Color["bg"] = \
+            self.__get_rgb(self.ColorRedInput, self.ColorGreenInput,
+                           self.ColorBlueInput)
 
     def __manual_color_change(self):
         try:
