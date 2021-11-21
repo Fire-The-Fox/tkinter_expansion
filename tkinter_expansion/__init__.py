@@ -12,6 +12,9 @@ tmp_top = None
 class DesignerThemeNotFound(Exception):
     """ This exception is raised when Designer didn't find specific theme. """
 
+    def __init__(self):
+        super().__init__()
+
 
 class Designer:
     """
@@ -190,7 +193,7 @@ class Designer:
                            self.ColorBlueInput)
 
     def __manual_color_change(self):
-        """ This private function is setting example color from ManualValue entry. """
+        """This private function is setting example color from ManualValue entry."""
         try:
             self.Color.configure(background=self.ManualValue.get())
         except tk.TclError:
@@ -410,7 +413,6 @@ class Designer:
         """
 
         :param name: put name of theme you want to load
-        :return:
         """
         self.name = name
 
@@ -418,7 +420,6 @@ class Designer:
         """
 
         :param widget: widget you want to bind to designer
-        :return:
         """
         if self.show:
             widget.bind("<Button-3>", self.__select_widget)
@@ -428,7 +429,6 @@ class Designer:
         """
 
         :param widgets: input widgets in list you want to bind to designer
-        :return:
         """
         for i in widgets:
             if self.show:

@@ -53,7 +53,7 @@ class Dropdown(tk.Button):
                     x += data.winfo_width()
 
     def pack_data(self):
-        """ Hides every other elements of Dropdown. """
+        """Hides every other elements of Dropdown."""
         self["command"] = self.unpack
         self["text"] = self.kw["text"] + " ▼"
         for i in self.labels:

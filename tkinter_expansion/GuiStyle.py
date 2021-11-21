@@ -3,7 +3,10 @@ import json
 
 
 class CssWrapperMissingFile(Exception):
-    """ This exception is raised when CssWrapper didn't find specific css file. """
+    """This exception is raised when CssWrapper didn't find specific css file."""
+
+    def __init__(self):
+        super().__init__()
 
 
 class CssWrapperMissingChar(Exception):
@@ -11,9 +14,12 @@ class CssWrapperMissingChar(Exception):
     This exception is raised when you forget specific character in your css file.
     """
 
+    def __init__(self):
+        super().__init__()
+
 
 class StyleManager:
-    """ StyleManager allows you to return json data from css file. """
+    """StyleManager allows you to return json data from css file."""
     def __init__(self, *args, **kwargs):
         self.kwargs = {"css_file": None}
         self.kwargs.update(kwargs)
@@ -68,7 +74,7 @@ class StyleManager:
     def css_to_theme(self, name="css_theme"):
         """
 
-        Cave css as theme.
+        Save css as theme.
 
         :param name: name of theme to which you want to save.
         """
