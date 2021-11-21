@@ -6,14 +6,12 @@ class CssWrapperMissingFile(Exception):
     """
     This exception is raised when CssWrapper didn't find specific css file.
     """
-    pass
 
 
 class CssWrapperMissingChar(Exception):
     """
     This exception is raised when you forget specific character in your css file.
     """
-    pass
 
 
 class StyleManager:

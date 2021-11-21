@@ -13,7 +13,6 @@ class DesignerThemeNotFound(Exception):
     """
     This exception is raised when Designer didn't find specific theme.
     """
-    pass
 
 
 class Designer:
@@ -34,12 +33,12 @@ class Designer:
             master, width, height, title, show, share_locals, share_globals
         """
         self.selected = ""
+        self.changed_widgets = {"": {"": ""}}
         self.changed_widgets = {}
-        self.rgb_value = [0, 0, 0]
+        self.rgb_value = (0, 0, 0)
         self.var_data = None
         self.name = "default"
-        self.var_name_data = None
-        self.Thread1 = None
+        self.var_name_data = ""
         self.args = args
         self.apply_text = ""
         self.check_var = tk.StringVar()
@@ -69,15 +68,14 @@ class Designer:
                                  "title",
                                  "orient"]
 
-        self._all_available_kwargs = ["master", "width", "height", "title", "show"]
-        self.kwargs = {"master": tk.Tk,
-                       "width": 400,
+        self._all_available_kwargs = ["width", "height", "title", "show"]
+        self.kwargs = {"width": 400,
                        "height": 500,
                        "title": "Tkinter expansion designer",
                        "show": True}
 
         self.kwargs.update(kwargs)
-        self.window = tk.Toplevel(self.kwargs["master"], bg="#333333")
+        self.window = tk.Toplevel(bg="#333333")
         self.window.resizable(False, False)
         self.window.title(self.kwargs["title"])
         self.window.configure(width=self.kwargs["width"], height=self.kwargs["height"])
