@@ -3,9 +3,7 @@ import json
 
 
 class CssWrapperMissingFile(Exception):
-    """
-    This exception is raised when CssWrapper didn't find specific css file.
-    """
+    """ This exception is raised when CssWrapper didn't find specific css file. """
 
 
 class CssWrapperMissingChar(Exception):
@@ -15,10 +13,7 @@ class CssWrapperMissingChar(Exception):
 
 
 class StyleManager:
-    """
-
-    StyleManager allows you to return json data from css file.
-    """
+    """ StyleManager allows you to return json data from css file. """
     def __init__(self, *args, **kwargs):
         self.kwargs = {"css_file": None}
         self.kwargs.update(kwargs)

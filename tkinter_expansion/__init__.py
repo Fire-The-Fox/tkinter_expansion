@@ -10,9 +10,7 @@ tmp_top = None
 
 
 class DesignerThemeNotFound(Exception):
-    """
-    This exception is raised when Designer didn't find specific theme.
-    """
+    """ This exception is raised when Designer didn't find specific theme. """
 
 
 class Designer:
@@ -36,7 +34,7 @@ class Designer:
         self.changed_widgets = {"": {"": ""}}
         self.changed_widgets = {}
         self.rgb_value = [0, 0, 0]
-        self.var_data = None
+        self.var_data = ""
         self.name = "default"
         self.var_name_data = ""
         self.args = args
@@ -192,10 +190,7 @@ class Designer:
                            self.ColorBlueInput)
 
     def __manual_color_change(self):
-        """
-
-        This private function is setting example color from ManualValue entry
-        """
+        """ This private function is setting example color from ManualValue entry. """
         try:
             self.Color.configure(background=self.ManualValue.get())
         except tk.TclError:
@@ -252,6 +247,13 @@ class Designer:
             self.changed_widgets[self.var_name_data] = {}
 
     def __color_parts(self, part: tk.Event, value: str):
+        """
+        This private function will change colors values of selected widget.
+
+        :param part: widget to change color data
+        :param value: selected widget
+        :return:
+        """
         self.selected = value
         try:
             self.rgb_value = hex_to_rgb(part.widget.cget(value).replace("#", ""))
@@ -287,6 +289,13 @@ class Designer:
         self.SaveButton.configure(command=lambda: self.__save(self.name))
 
     def __apply_values(self, part: tk.Event):
+        """
+
+        This private function applies modified values to theme and also to widget
+
+        :param part: widget that is being configured
+        :return:
+        """
         if len(self.ManualValue.get()) == 0:
             rgb_values = self.__get_rgb(self.ColorRedInput, self.ColorGreenInput,
                                         self.ColorBlueInput)
@@ -450,7 +459,6 @@ def hex_to_rgb(hex_color: str) -> list:
     :return: rgb value from hex color
     """
     try:
-        return_list = [0, 0, 0]
         return_list = [int(hex_color[i:i + 2], 16) for i in (0, 2, 4)]
         return return_list
     except ValueError:
