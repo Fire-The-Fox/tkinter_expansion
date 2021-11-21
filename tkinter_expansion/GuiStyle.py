@@ -55,6 +55,8 @@ class StyleManager:
                     if raise_error:
                         raise CssWrapperMissingChar("isn't } missing?")
             return self.json_data
+        else:
+            raise CssWrapperMissingFile(f"Css file is missing!")
 
     def css_to_theme(self, name="css_theme"):
         try:

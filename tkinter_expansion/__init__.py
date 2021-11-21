@@ -289,6 +289,7 @@ class Designer:
         self.ColorBlueInput.insert(0, "0")
         self.ApplyButton.configure(command=None)
         self.selected = ""
+        return None
 
     def __save(self, name="default"):
         try:
