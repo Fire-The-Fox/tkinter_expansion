@@ -35,7 +35,7 @@ class Designer:
         self.selected = ""
         self.changed_widgets = {"": {"": ""}}
         self.changed_widgets = {}
-        self.rgb_value = ()
+        self.rgb_value = [0, 0, 0]
         self.var_data = None
         self.name = "default"
         self.var_name_data = ""
@@ -443,15 +443,17 @@ def rgb_to_hex(red: int, green: int, blue: int) -> str:
     return '#%02x%02x%02x' % (red, green, blue)
 
 
-def hex_to_rgb(hex_color: str) -> tuple:
+def hex_to_rgb(hex_color: str) -> list:
     """
 
     :param hex_color: hex color value
     :return: rgb value from hex color
     """
     try:
-        return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
+        return_list = [0, 0, 0]
+        return_list = [int(hex_color[i:i + 2], 16) for i in (0, 2, 4)]
+        return return_list
     except ValueError:
         tkm.showwarning("Designer", f"It's not possible for me to convert {hex_color} "
                                     f"to RGB")
-        return 0, 0, 0
+        return [0, 0, 0]
