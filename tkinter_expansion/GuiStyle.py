@@ -26,17 +26,6 @@ class StyleManager:
 
             if raise_file:
                 raise CssWrapperMissingFile(f"File named {self.kwargs['css_file']} was not found!")
-            identifiers2 = {"color": "background",
-                          "bordercolor": "highlightbackground",
-                          "bordercolorwidth": "highlightthickness",
-                          "activecolor": "activebackground",
-                          "textcolor": "foreground",
-                          "activetextcolor": "activeforeground",
-                          "disabledtextcolor": "disabledforeground",
-                          "activebordercolor": "highlightcolor"}
-            identifiers = [i for i in identifiers2]
-            for a in identifiers2.values():
-                identifiers.append(a)
             self.json_data = {}
             new_i = ""
             line = 0
@@ -54,9 +43,6 @@ class StyleManager:
                     if len(i.strip()) == 0:
                         raise CssWrapperMissingChar("isn't } missing?")
                     new_a = i.split(":")[0].strip(" ")
-                    if new_a not in identifiers:
-                        if "#" in new_a or "." in new_a:
-                            raise CssWrapperMissingChar("isn't { missing?")
                     try:
                         if ";" not in i.split(":")[1]:
                             print(f"Warning: Missing ; in line {line}")
