@@ -180,11 +180,6 @@ class Designer:
         except tk.TclError:
             pass
 
-    def __set_rgb(self, what_to_change: tk.Event):
-        what_to_change.widget.configure(background=self.__get_rgb(self.ColorRedInput,
-                                                                  self.ColorGreenInput,
-                                                                  self.ColorBlueInput))
-
     def __get_rgb(self, *args: tk.Entry):
         final_values = []
         for i in args:
@@ -280,7 +275,7 @@ class Designer:
             self.Color.configure(background="black")
         except tk.TclError:
             return True
-        self.Name.configure(text=f"Name: ")
+        self.Name.configure(text="Name: ")
         self.ColorRedInput.delete(0, tk.END)
         self.ColorRedInput.insert(0, "0")
         self.ColorGreenInput.delete(0, tk.END)
@@ -320,7 +315,6 @@ class Designer:
                 self.changed_widgets[x] = {}
                 for a, b in y.items():
                     self.changed_widgets[x][a] = str(b)
-                    self.changed_widgets[x][a] = str(b)
             for value in variables_to_change:
                 if value in customWidgets:
                     for i in data[value]:
@@ -330,7 +324,7 @@ class Designer:
                         except tk.TclError:
                             continue
                 if isinstance(variables_to_change[value], list):
-                    for index, val in enumerate(variables_to_change[value]):
+                    for _, val in enumerate(variables_to_change[value]):
                         try:
                             val.configure(data[value])
                         except tk.TclError:
@@ -387,18 +381,12 @@ def rgb_to_hex(red: int, green: int, blue: int) -> str:
     :param blue: Blue color value
     :return: converts red, green, blue into hex color format for tkinter
     """
-    if red > 255:
-        red = 255
-    if green > 255:
-        green = 255
-    if blue > 255:
-        blue = 255
-    if red < 0:
-        red = 0
-    if green < 0:
-        green = 0
-    if blue < 0:
-        blue = 0
+    red = min(red, 255)
+    green = min(green, 255)
+    blue = min(blue, 255)
+    red = max(red, 0)
+    green = max(green, 0)
+    blue = max(blue, 0)
     return '#%02x%02x%02x' % (red, green, blue)
 
 

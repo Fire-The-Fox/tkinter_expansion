@@ -36,7 +36,7 @@ class Dropdown(tk.Button):
             self.labels[index].place(x=x, y=y, width=self.winfo_width())
             y += self.winfo_height()
             index += 1
-            if not self.kw["maximum"] == 0:
+            if self.kw["maximum"] != 0:
                 maximum += 1
                 if maximum == self.kw["maximum"]:
                     y = self.winfo_y() + self.winfo_height()

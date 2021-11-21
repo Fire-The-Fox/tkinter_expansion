@@ -14,6 +14,7 @@ class StyleManager:
     def __init__(self, *args, **kwargs):
         self.kwargs = {"css_file": None}
         self.kwargs.update(kwargs)
+        self.json_data = {}
 
     def load_css(self):
         if self.kwargs["css_file"] is not None:
@@ -27,7 +28,6 @@ class StyleManager:
             if raise_file:
                 raise CssWrapperMissingFile(f"File named {self.kwargs['css_file']} was "
                                             f"not found!")
-            self.json_data = {}
             new_i = ""
             line = 0
             for i in css_data:
