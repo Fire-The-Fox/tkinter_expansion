@@ -65,32 +65,46 @@ class Designer:
         self.window.title(self.kwargs["title"])
         self.window.configure(width=self.kwargs["width"], height=self.kwargs["height"])
 
-        self.EditDropdown = Dropdown(master=self.window, data=self.__color_data, variable=self.check_var,
-                                     font=("Ubuntu", 11), maximum=9, bg="#333333", fg="#ffffff",
-                                     activebackground="#ffffff", activeforeground="#000000")
+        self.EditDropdown = Dropdown(master=self.window, data=self.__color_data,
+                                     variable=self.check_var,
+                                     font=("Ubuntu", 11), maximum=9, bg="#333333",
+                                     fg="#ffffff",
+                                     activebackground="#ffffff",
+                                     activeforeground="#000000")
         self.EditDropdown.place(x=15, rely=0.32, width=175)
 
         self.ColorChoicePanel = tk.Label(self.window, background="#444444")
-        self.ColorChoicePanel.place(x=0, y=0, relheight=0.25, width=self.kwargs["width"])
-        self.ColorRedText = tk.Label(self.ColorChoicePanel, text="Red", background="#444444", fg="#ffffff")
+        self.ColorChoicePanel.place(x=0, y=0, relheight=0.25,
+                                    width=self.kwargs["width"])
+        self.ColorRedText = tk.Label(self.ColorChoicePanel, text="Red",
+                                     background="#444444", fg="#ffffff")
         self.ColorRedText.place(anchor="ne", x=275, y=25)
-        self.ColorRedInput = tk.Entry(self.ColorChoicePanel, background="#555555", bd=0, fg="#ffffff",
-                                      selectbackground="#ffffff", disabledbackground="#111111",
+        self.ColorRedInput = tk.Entry(self.ColorChoicePanel, background="#555555", bd=0,
+                                      fg="#ffffff",
+                                      selectbackground="#ffffff",
+                                      disabledbackground="#111111",
                                       disabledforeground="#ffffff")
         self.ColorRedInput.place(x=275, y=20, height=20, width=120)
-        self.ColorGreenText = tk.Label(self.ColorChoicePanel, text="Green", background="#444444", fg="#ffffff")
+        self.ColorGreenText = tk.Label(self.ColorChoicePanel, text="Green",
+                                       background="#444444", fg="#ffffff")
         self.ColorGreenText.place(anchor="ne", x=275, y=60)
-        self.ColorGreenInput = tk.Entry(self.ColorChoicePanel, background="#555555", bd=0, fg="#ffffff",
-                                        selectbackground="#ffffff", disabledbackground="#111111",
+        self.ColorGreenInput = tk.Entry(self.ColorChoicePanel, background="#555555",
+                                        bd=0, fg="#ffffff",
+                                        selectbackground="#ffffff",
+                                        disabledbackground="#111111",
                                         disabledforeground="#ffffff")
         self.ColorGreenInput.place(x=275, y=55, height=20, width=120)
-        self.ColorBlueText = tk.Label(self.ColorChoicePanel, text="Blue", background="#444444", fg="#ffffff")
+        self.ColorBlueText = tk.Label(self.ColorChoicePanel, text="Blue",
+                                      background="#444444", fg="#ffffff")
         self.ColorBlueText.place(anchor="ne", x=275, y=95)
-        self.ColorBlueInput = tk.Entry(self.ColorChoicePanel, background="#555555", bd=0, fg="#ffffff",
-                                       selectbackground="#ffffff", disabledbackground="#111111",
+        self.ColorBlueInput = tk.Entry(self.ColorChoicePanel, background="#555555",
+                                       bd=0, fg="#ffffff",
+                                       selectbackground="#ffffff",
+                                       disabledbackground="#111111",
                                        disabledforeground="#ffffff")
         self.ColorBlueInput.place(x=275, y=90, height=20, width=120)
-        self.Color = tk.Label(self.ColorChoicePanel, background="black", highlightbackground="white",
+        self.Color = tk.Label(self.ColorChoicePanel, background="black",
+                              highlightbackground="white",
                               highlightthickness=2)
         self.Color.place(x=12.5, y=12.5, height=100, width=100)
 
@@ -114,28 +128,39 @@ class Designer:
         self.Name = tk.Label(self.window, text="Name: ", bg="#333333", fg="#ffffff")
         self.Name.place(x=15, rely=0.26)
 
-        self.EditDropdownText = tk.Label(self.window, text="Change color data of selected widget",
+        self.EditDropdownText = tk.Label(self.window, text="Change color data of "
+                                                           "selected widget",
                                          bg="#333333", fg="#ffffff")
         self.EditDropdownText.place(x=15, rely=0.285)
 
-        self.BehaviourDropdown = Dropdown(master=self.window, data=self.__behaviour_data, variable=self.behaviour,
-                                          font=("Ubuntu", 11), maximum=7, bg="#333333", fg="#ffffff",
-                                          activebackground="#ffffff", activeforeground="#000000")
+        self.BehaviourDropdown = Dropdown(master=self.window,
+                                          data=self.__behaviour_data,
+                                          variable=self.behaviour,
+                                          font=("Ubuntu", 11), maximum=7, bg="#333333",
+                                          fg="#ffffff",
+                                          activebackground="#ffffff",
+                                          activeforeground="#000000")
         self.BehaviourDropdown.place(x=15, rely=0.42, width=100)
 
-        self.EditDropdownText = tk.Label(self.window, text="Change behaviour data of selected widget",
+        self.EditDropdownText = tk.Label(self.window, text="Change behaviour data of"
+                                                           " selected widget",
                                          bg="#333333", fg="#ffffff")
         self.EditDropdownText.place(x=15, rely=0.385)
 
-        self.ApplyButton = tk.Button(self.window, text="Apply", bg="#333333", fg="#ffffff", bd=0,
-                                     activebackground="#ffffff", activeforeground="#000000", relief="sunken")
+        self.ApplyButton = tk.Button(self.window, text="Apply", bg="#333333",
+                                     fg="#ffffff", bd=0,
+                                     activebackground="#ffffff",
+                                     activeforeground="#000000", relief="sunken")
         self.ApplyButton.place(x=265, y=455)
 
-        self.SaveButton = tk.Button(self.window, text="Save", bg="#333333", fg="#ffffff", bd=0,
-                                    activebackground="#ffffff", activeforeground="#000000", relief="sunken")
+        self.SaveButton = tk.Button(self.window, text="Save", bg="#333333",
+                                    fg="#ffffff", bd=0,
+                                    activebackground="#ffffff",
+                                    activeforeground="#000000", relief="sunken")
         self.SaveButton.place(x=325, y=455)
 
-        self.ManualValue = tk.Entry(self.window, background="#555555", bd=0, fg="#ffffff",
+        self.ManualValue = tk.Entry(self.window, background="#555555", bd=0,
+                                    fg="#ffffff",
                                     selectbackground="#ffffff", font=("Ubuntu", 12))
         self.ManualValue.place(x=15, y=455)
 
@@ -172,8 +197,10 @@ class Designer:
     def __select_widget(self, part: tk.Event):
         if self.__un_select():
             return
-        self.EditDropdown.kw["pack_cmd"] = lambda: self.__color_parts(part, self.check_var.get())
-        self.BehaviourDropdown.kw["pack_cmd"] = lambda: self.__modify_parts(part, self.behaviour.get())
+        self.EditDropdown.kw["pack_cmd"] = \
+            lambda: self.__color_parts(part, self.check_var.get())
+        self.BehaviourDropdown.kw["pack_cmd"] = \
+            lambda: self.__modify_parts(part, self.behaviour.get())
         if "dropdown" in str(part.widget).split('.')[-1].lower():
             self.Name.configure(text=f"Name: {part.widget.kw['name']}")
             self.var_data = part.widget.kw['name']
@@ -222,12 +249,16 @@ class Designer:
 
     def __apply_values(self, part: tk.Event):
         if len(self.ManualValue.get()) == 0:
-            self.apply_text = f"'{self.__get_rgb(self.ColorRedInput, self.ColorGreenInput, self.ColorBlueInput)}'"
+            rgb_values = self.__get_rgb(self.ColorRedInput, self.ColorGreenInput,
+                                        self.ColorBlueInput)
+            self.apply_text = f"'{rgb_values}'"
             try:
                 part.widget.configure({self.selected: self.apply_text.replace("'", "")})
-                self.changed_widgets[self.var_name_data][self.selected] = str(part.widget[self.selected])
+                self.changed_widgets[self.var_name_data][self.selected] = \
+                    str(part.widget[self.selected])
             except tk.TclError:
-                tkm.showwarning("Designer", f"it looks like {self.selected} cannot be set for this widget")
+                tkm.showwarning("Designer", f"it looks like {self.selected} "
+                                            f"cannot be set for this widget")
         else:
             self.apply_text = self.ManualValue.get()
             try:
@@ -235,10 +266,13 @@ class Designer:
                     part.widget[self.selected] = self.ManualValue.get()
                 except IndexError:
                     pass
-                self.changed_widgets[self.var_name_data][self.selected] = str(part.widget[self.selected])
+                self.changed_widgets[self.var_name_data][self.selected] = \
+                    str(part.widget[self.selected])
             except tk.TclError:
-                tkm.showwarning("Designer", f"it looks like {self.selected} cannot be set for this widget or"
-                                            f" \'{self.ManualValue.get()}\' cannot be set for {self.selected}")
+                tkm.showwarning("Designer", f"it looks like {self.selected} "
+                                            f"cannot be set for this widget or"
+                                            f" \'{self.ManualValue.get()}\' "
+                                            f"cannot be set for {self.selected}")
 
     def __un_select(self):
         try:
@@ -311,7 +345,8 @@ class Designer:
         except FileNotFoundError:
             give = True
         if give:
-            raise DesignerThemeNotFound(f"Theme with name {self.name} was not found in themes folder!")
+            raise DesignerThemeNotFound(f"Theme with name {self.name} was not found in"
+                                        f" themes folder!")
 
     def set_theme_name(self, name="default"):
         """
@@ -374,7 +409,8 @@ def hex_to_rgb(hex_color: str) -> tuple:
     try:
         return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
     except ValueError:
-        tkm.showwarning("Designer", f"It's not possible for me to convert {hex_color} to RGB")
+        tkm.showwarning("Designer", f"It's not possible for me to convert {hex_color} "
+                                    f"to RGB")
         return 0, 0, 0
 
 
@@ -402,7 +438,8 @@ def __show_hint(panel, text: str):
     tmp_top = tk.Toplevel(panel)
     tmp_top.wm_overrideredirect(True)
     tmp_top.wm_geometry("+%d+%d" % (x, y))
-    tmp_top_label = tk.Label(tmp_top, text=text, justify='left', background="#ffffff", relief='solid', borderwidth=1)
+    tmp_top_label = tk.Label(tmp_top, text=text, justify='left', background="#ffffff",
+                             relief='solid', borderwidth=1)
     tmp_top_label.pack(ipadx=1)
 
 

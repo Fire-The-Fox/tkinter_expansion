@@ -4,7 +4,8 @@ import tkinter as tk
 class Dropdown(tk.Button):
     def __init__(self, **kwargs):
 
-        self.kw = {"master": None, "text": kwargs["data"][0], "data": [], "font": ("Ubuntu", 12), "relief": "sunken",
+        self.kw = {"master": None, "text": kwargs["data"][0], "data": [],
+                   "font": ("Ubuntu", 12), "relief": "sunken",
                    "variable": None, "bd": 0,
                    "command": self.unpack, "maximum": 0, "pack_cmd": None}
         self.kw.update(kwargs)

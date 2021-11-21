@@ -25,7 +25,8 @@ class StyleManager:
                 raise_file = True
 
             if raise_file:
-                raise CssWrapperMissingFile(f"File named {self.kwargs['css_file']} was not found!")
+                raise CssWrapperMissingFile(f"File named {self.kwargs['css_file']} was "
+                                            f"not found!")
             self.json_data = {}
             new_i = ""
             line = 0
@@ -37,7 +38,8 @@ class StyleManager:
                         continue
                     if "#" not in i and "." not in i:
                         print(f"Warning: Missing #/. in line {line}")
-                    new_i = i.replace(".", "").replace("#", "").replace("{", "").strip(" ")
+                    new_i = i.replace(".", "").replace("#", "").replace("{", "")\
+                        .strip(" ")
                     self.json_data[new_i] = {}
                 else:
                     if len(i.strip()) == 0:
