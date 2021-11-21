@@ -402,39 +402,3 @@ def hex_to_rgb(hex_color: str) -> tuple:
         tkm.showwarning("Designer", f"It's not possible for me to convert {hex_color} "
                                     f"to RGB")
         return 0, 0, 0
-
-
-def bind_help(panel, text, timeout):
-    """
-
-    :param panel: widget you want to show hint on
-    :param text: help message
-    :param timeout: show after specific time in ms
-    :return:
-    """
-    panel.bind("<Enter>", lambda _: panel.after(timeout, __show_hint(panel, text=text)))
-    unbind_help(panel)
-
-
-def unbind_help(panel):
-    panel.bind("<Leave>", lambda _: __hide_hint())
-
-
-def __show_hint(panel, text: str):
-    global tmp_top, tmp_top_label
-    x = y = 0
-    x += panel.winfo_rootx() + 25
-    y += panel.winfo_rooty() + 20
-    tmp_top = tk.Toplevel(panel)
-    tmp_top.wm_overrideredirect(True)
-    tmp_top.wm_geometry("+%d+%d" % (x, y))
-    tmp_top_label = tk.Label(tmp_top, text=text, justify='left', background="#ffffff",
-                             relief='solid', borderwidth=1)
-    tmp_top_label.pack(ipadx=1)
-
-
-def __hide_hint():
-    global tmp_top_label, tmp_top
-    if tmp_top is not None and tmp_top_label is not None:
-        tmp_top_label.destroy()
-        tmp_top.destroy()
