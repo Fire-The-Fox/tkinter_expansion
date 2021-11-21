@@ -29,10 +29,7 @@ class Dropdown(tk.Button):
         self.kw["variable"].set(self.kw["data"][0])
 
     def unpack(self):
-        """
-        Function unpack generates elements and it also gives functionality of Dropdown
-        """
-
+        """Function unpack generates elements, gives Functionality of Dropdown."""
         self["text"] = self.kw["text"] + " ▲"
         self["command"] = self.pack_data
         y = self.winfo_y() + self.winfo_height()
@@ -56,7 +53,6 @@ class Dropdown(tk.Button):
 
     def pack_data(self):
         """Hides every other elements of Dropdown."""
-
         self["command"] = self.unpack
         self["text"] = self.kw["text"] + " ▼"
         for i in self.labels:
@@ -71,7 +67,6 @@ class Dropdown(tk.Button):
 
         :param value: Which value to set for variable
         """
-
         if isinstance(self.kw["variable"], tk.StringVar):
             self.kw["variable"].set(value)
             self.pack_data()
@@ -80,7 +75,6 @@ class Dropdown(tk.Button):
 
     def redraw_top(self):
         """ This function will redraw top part of Dropdown widget. """
-
         self.kw["text"] = self.kw["data"][0]
         self["text"] = self.kw["text"] + " ▼"
         self.kw["variable"].set(self.kw["data"][0])
@@ -92,7 +86,6 @@ class Dropdown(tk.Button):
 
         :param kwargs:  things to be configured
         """
-
         self.kw.update(kwargs)
         for i in self.kw:
             if i in ["variable", "data", "master", "maximum", "pack_cmd", "name"]:

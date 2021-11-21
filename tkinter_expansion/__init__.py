@@ -404,26 +404,17 @@ class Designer:
                             "themes folder!")
 
     def set_theme_name(self, name="default"):
-        """
-
-        :param name: put name of theme you want to load
-        """
+        """:param name: put name of theme you want to load."""
         self.name = name
 
     def bind(self, widget):
-        """
-
-        :param widget: widget you want to bind to designer
-        """
+        """:param widget: widget you want to bind to designer."""
         if self.show:
             widget.bind("<Button-3>", self.__select_widget)
             widget.bind_all("<Escape>", lambda event: self.__un_select())
 
     def bind_to(self, widgets: list):
-        """
-
-        :param widgets: input widgets in list you want to bind to designer
-        """
+        """:param widgets: input widgets in list you want to bind to designer."""
         for i in widgets:
             if self.show:
                 i.bind("<Button-3>", self.__select_widget)

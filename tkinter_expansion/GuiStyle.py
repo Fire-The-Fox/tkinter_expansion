@@ -16,7 +16,6 @@ class StyleManager:
         Function load_css basically converts css to json.
         :return:
         """
-
         if self.kwargs["css_file"] is not None:
             raise_file = False
             try:
@@ -63,7 +62,6 @@ class StyleManager:
 
         :param name: name of theme to which you want to save.
         """
-        
         try:
             mkdir("themes")
         except FileExistsError:
