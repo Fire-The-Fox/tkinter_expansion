@@ -1,8 +1,9 @@
 import tkinter as tk
+import tkinter.messagebox as tkm
 from os import mkdir
 import json
 from . import GuiStyle
-from .Identifiers import UnknownIdentifier
+from .dropdown import Dropdown
 
 tmp_top_label = None
 tmp_top = None
@@ -20,17 +21,6 @@ class Designer:
         :param kwargs: available kwargs:
             master, width, height, title, show, share_locals, share_globals
         """
-        self.identifiers2 = {"color": "background",
-                        "bordercolor": "highlightbackground",
-                        "bordercolorwidth": "highlightthickness",
-                        "activecolor": "activebackground",
-                        "textcolor": "foreground",
-                        "activetextcolor": "activeforeground",
-                        "disabledtextcolor": "disabledforeground",
-                        "activebordercolor": "highlightcolor"}
-        self.identifiers = [i for i in self.identifiers2]
-        for a in self.identifiers2.values():
-            self.identifiers.append(a)
         self.selected = ""
         self.changed_widgets = {}
         self.rgb_value = None
@@ -38,52 +28,70 @@ class Designer:
         self.name = "default"
         self.var_name_data = None
         self.Thread1 = None
-        self.kwargs = kwargs
         self.args = args
-        self._color_data = ["activebackground",
-                            "activeforeground",
-                            "background",
-                            "disabledforeground",
-                            "foreground",
-                            "highlightbackground",
-                            "highlightcolor"]
+        self.check_var = tk.StringVar()
+        self.behaviour = tk.StringVar()
+        self.__color_data = ["activebackground",
+                             "activeforeground",
+                             "background",
+                             "disabledforeground",
+                             "disabledbackground",
+                             "foreground",
+                             "highlightbackground",
+                             "highlightcolor",
+                             "selectbackground",
+                             "selectforeground",
+                             "selectcolor",
+                             "troughcolor"]
+        self.__behaviour_data = ["relief",
+                                 "justify",
+                                 "underline",
+                                 "overrelief",
+                                 "state",
+                                 "cursor",
+                                 "title",
+                                 "orient"]
 
-        self._all_available_kwargs = ["master", "width", "height", "title", "show", "share_locals", "share_globals"]
-        self._kwargs_fix = {"master": lambda: tk.Tk(),
-                            "width": 400,
-                            "height": 500,
-                            "title": "Tkinter expansion designer",
-                            "show": True,
-                            "share_locals": None,
-                            "share_globals": None}
+        self._all_available_kwargs = ["master", "width", "height", "title", "show"]
+        self.kwargs = {"master": lambda: tk.Tk(),
+                       "width": 400,
+                       "height": 500,
+                       "title": "Tkinter expansion designer",
+                       "show": True}
 
-        for i in self._all_available_kwargs:
-            try:
-                self.kwargs[i]
-            except KeyError:
-                self.kwargs[i] = self._kwargs_fix[i]
-        self.share_locals = self.kwargs["share_locals"]
-        self.share_globals = self.kwargs["share_globals"]
-        self.window = tk.Toplevel(self.kwargs["master"])
+        self.kwargs.update(kwargs)
+        self.window = tk.Toplevel(self.kwargs["master"], bg="#333333")
         self.window.resizable(False, False)
         self.window.title(self.kwargs["title"])
         self.window.configure(width=self.kwargs["width"], height=self.kwargs["height"])
 
-        self.ColorChoicePanel = tk.Label(self.window, background="white")
+        self.EditDropdown = Dropdown(master=self.window, data=self.__color_data, variable=self.check_var,
+                                     font=("Ubuntu", 11), maximum=9, bg="#333333", fg="#ffffff",
+                                     activebackground="#ffffff", activeforeground="#000000")
+        self.EditDropdown.place(x=15, rely=0.32, width=175)
+
+        self.ColorChoicePanel = tk.Label(self.window, background="#444444")
         self.ColorChoicePanel.place(x=0, y=0, relheight=0.25, width=self.kwargs["width"])
-        self.ColorRedText = tk.Label(self.ColorChoicePanel, text="Red", background="white")
+        self.ColorRedText = tk.Label(self.ColorChoicePanel, text="Red", background="#444444", fg="#ffffff")
         self.ColorRedText.place(anchor="ne", x=275, y=25)
-        self.ColorRedInput = tk.Entry(self.ColorChoicePanel, background="white")
+        self.ColorRedInput = tk.Entry(self.ColorChoicePanel, background="#555555", bd=0, fg="#ffffff",
+                                      selectbackground="#ffffff", disabledbackground="#111111",
+                                      disabledforeground="#ffffff")
         self.ColorRedInput.place(x=275, y=20, height=20, width=120)
-        self.ColorGreenText = tk.Label(self.ColorChoicePanel, text="Green", background="white")
+        self.ColorGreenText = tk.Label(self.ColorChoicePanel, text="Green", background="#444444", fg="#ffffff")
         self.ColorGreenText.place(anchor="ne", x=275, y=60)
-        self.ColorGreenInput = tk.Entry(self.ColorChoicePanel, background="white")
+        self.ColorGreenInput = tk.Entry(self.ColorChoicePanel, background="#555555", bd=0, fg="#ffffff",
+                                        selectbackground="#ffffff", disabledbackground="#111111",
+                                        disabledforeground="#ffffff")
         self.ColorGreenInput.place(x=275, y=55, height=20, width=120)
-        self.ColorBlueText = tk.Label(self.ColorChoicePanel, text="Blue", background="white")
+        self.ColorBlueText = tk.Label(self.ColorChoicePanel, text="Blue", background="#444444", fg="#ffffff")
         self.ColorBlueText.place(anchor="ne", x=275, y=95)
-        self.ColorBlueInput = tk.Entry(self.ColorChoicePanel, background="white")
+        self.ColorBlueInput = tk.Entry(self.ColorChoicePanel, background="#555555", bd=0, fg="#ffffff",
+                                       selectbackground="#ffffff", disabledbackground="#111111",
+                                       disabledforeground="#ffffff")
         self.ColorBlueInput.place(x=275, y=90, height=20, width=120)
-        self.Color = tk.Label(self.ColorChoicePanel, background="black")
+        self.Color = tk.Label(self.ColorChoicePanel, background="black", highlightbackground="white",
+                              highlightthickness=2)
         self.Color.place(x=12.5, y=12.5, height=100, width=100)
 
         self.ColorRedInput.insert(0, "0")
@@ -91,40 +99,67 @@ class Designer:
         self.ColorBlueInput.insert(0, "0")
 
         self.ColorRedInput.bind("<KeyRelease>", lambda _: self.Color.configure(
-            background=self._get_rgb(self.ColorRedInput,
-                                     self.ColorGreenInput,
-                                     self.ColorBlueInput)))
+            background=self.__get_rgb(self.ColorRedInput,
+                                      self.ColorGreenInput,
+                                      self.ColorBlueInput)))
         self.ColorGreenInput.bind("<KeyRelease>", lambda _: self.Color.configure(
-            background=self._get_rgb(self.ColorRedInput,
-                                     self.ColorGreenInput,
-                                     self.ColorBlueInput)))
+            background=self.__get_rgb(self.ColorRedInput,
+                                      self.ColorGreenInput,
+                                      self.ColorBlueInput)))
         self.ColorBlueInput.bind("<KeyRelease>", lambda _: self.Color.configure(
-            background=self._get_rgb(self.ColorRedInput,
-                                     self.ColorGreenInput,
-                                     self.ColorBlueInput)))
+            background=self.__get_rgb(self.ColorRedInput,
+                                      self.ColorGreenInput,
+                                      self.ColorBlueInput)))
 
-        self.Name = tk.Label(self.window, text="Name: ")
+        self.Name = tk.Label(self.window, text="Name: ", bg="#333333", fg="#ffffff")
         self.Name.place(x=15, rely=0.26)
 
-        self.ApplyButton = tk.Button(self.window, text="Apply")
+        self.EditDropdownText = tk.Label(self.window, text="Change color data of selected widget",
+                                         bg="#333333", fg="#ffffff")
+        self.EditDropdownText.place(x=15, rely=0.285)
+
+        self.BehaviourDropdown = Dropdown(master=self.window, data=self.__behaviour_data, variable=self.behaviour,
+                                          font=("Ubuntu", 11), maximum=7, bg="#333333", fg="#ffffff",
+                                          activebackground="#ffffff", activeforeground="#000000")
+        self.BehaviourDropdown.place(x=15, rely=0.42, width=100)
+
+        self.EditDropdownText = tk.Label(self.window, text="Change behaviour data of selected widget",
+                                         bg="#333333", fg="#ffffff")
+        self.EditDropdownText.place(x=15, rely=0.385)
+
+        self.ApplyButton = tk.Button(self.window, text="Apply", bg="#333333", fg="#ffffff", bd=0,
+                                     activebackground="#ffffff", activeforeground="#000000", relief="sunken")
         self.ApplyButton.place(x=265, y=455)
 
-        self.SaveButton = tk.Button(self.window, text="Save")
+        self.SaveButton = tk.Button(self.window, text="Save", bg="#333333", fg="#ffffff", bd=0,
+                                    activebackground="#ffffff", activeforeground="#000000", relief="sunken")
         self.SaveButton.place(x=325, y=455)
+
+        self.ManualValue = tk.Entry(self.window, background="#555555", bd=0, fg="#ffffff",
+                                    selectbackground="#ffffff", font=("Ubuntu", 12))
+        self.ManualValue.place(x=15, y=455)
+
+        self.ManualValue.bind("<KeyRelease>", lambda _: self.__manual_color_change())
 
         if self.kwargs["show"]:
             pass
         else:
             self.window.destroy()
 
-        self.show = kwargs["show"]
+        self.show = self.kwargs["show"]
 
-    def set_rgb(self, what_to_change: tk.Event):
-        what_to_change.widget.configure(background=self._get_rgb(self.ColorRedInput,
-                                                                 self.ColorGreenInput,
-                                                                 self.ColorBlueInput))
+    def __manual_color_change(self):
+        try:
+            self.Color.configure(background=self.ManualValue.get())
+        except tk.TclError:
+            pass
 
-    def _get_rgb(self, *args: tk.Entry):
+    def __set_rgb(self, what_to_change: tk.Event):
+        what_to_change.widget.configure(background=self.__get_rgb(self.ColorRedInput,
+                                                                  self.ColorGreenInput,
+                                                                  self.ColorBlueInput))
+
+    def __get_rgb(self, *args: tk.Entry):
         final_values = []
         for i in args:
             self._term_i = i.get()
@@ -134,49 +169,78 @@ class Designer:
                 final_values.append(0)
         return rgb_to_hex(final_values[0], final_values[1], final_values[2])
 
-    def select_widget(self, part: tk.Event):
-        if self.un_select():
+    def __select_widget(self, part: tk.Event):
+        if self.__un_select():
             return
-        yy = 0.29
-        for i in self._color_data:
-            self.tmp_Button = tk.Button(self.window, text=f"Change {i}", command=lambda y=i:
-            self._color_parts(part, y))
-            self.tmp_Button.place(x=14, rely=yy)
-            yy += 0.06
-        self.Name.configure(text=f"Name: {id(part.widget)}")
-        self.var_data = _get_var_by_id(id(part.widget), self.share_globals)
-        self.var_name_data = _get_var_by_name(self.var_data[0], self.share_locals)[0]
+        self.EditDropdown.kw["pack_cmd"] = lambda: self.__color_parts(part, self.check_var.get())
+        self.BehaviourDropdown.kw["pack_cmd"] = lambda: self.__modify_parts(part, self.behaviour.get())
+        if "dropdown" in str(part.widget).split('.')[-1].lower():
+            self.Name.configure(text=f"Name: {part.widget.kw['name']}")
+            self.var_data = part.widget.kw['name']
+            self.var_name_data = part.widget.kw['name']
+        else:
+            self.Name.configure(text=f"Name: {str(part.widget).split('.')[-1]}")
+            self.var_data = str(part.widget).split(".")[-1]
+            self.var_name_data = str(part.widget).split(".")[-1]
+        finder = 0
+        for i in list(self.changed_widgets.items()):
+            finder += i.count(self.var_name_data)
         try:
-            if list(self.changed_widgets.items())[0].count(self.var_name_data) > 0:
+            if finder > 0:
                 pass
             else:
                 self.changed_widgets[self.var_name_data] = {}
         except IndexError:
             self.changed_widgets[self.var_name_data] = {}
 
-    def _color_parts(self, part: tk.Event, value: str):
+    def __color_parts(self, part: tk.Event, value: str):
         self.selected = value
         try:
             self.rgb_value = hex_to_rgb(part.widget.cget(value).replace("#", ""))
         except tk.TclError:
             return
+        self.ColorRedInput["state"] = "normal"
+        self.ColorGreenInput["state"] = "normal"
+        self.ColorBlueInput["state"] = "normal"
         self.ColorRedInput.delete(0, tk.END)
         self.ColorRedInput.insert(0, self.rgb_value[0])
         self.ColorGreenInput.delete(0, tk.END)
         self.ColorGreenInput.insert(0, self.rgb_value[1])
         self.ColorBlueInput.delete(0, tk.END)
         self.ColorBlueInput.insert(0, self.rgb_value[2])
-        self.Color.configure(background=part.widget.cget(value))
-        self.ApplyButton.configure(command=lambda: self._apply_values(part))
-        self.SaveButton.configure(command=lambda: self.save(self.name))
+        self.Color.configure(background=part.widget[value])
+        self.ApplyButton.configure(command=lambda: self.__apply_values(part))
+        self.SaveButton.configure(command=lambda: self.__save(self.name))
 
-    def _apply_values(self, part: tk.Event):
-        self.apply_text = f"'{self._get_rgb(self.ColorRedInput, self.ColorGreenInput, self.ColorBlueInput)}'"
-        exec("part.widget.configure(" + f"{self.selected}=" + self.apply_text + ")")
-        self.changed_widgets[self.var_name_data][self.selected] = str(part.widget.cget(self.selected))
-        print(self.changed_widgets)
+    def __modify_parts(self, part: tk.Event, value: str):
+        self.selected = value
+        self.ColorRedInput["state"] = "disabled"
+        self.ColorGreenInput["state"] = "disabled"
+        self.ColorBlueInput["state"] = "disabled"
+        self.ApplyButton.configure(command=lambda: self.__apply_values(part))
+        self.SaveButton.configure(command=lambda: self.__save(self.name))
 
-    def un_select(self):
+    def __apply_values(self, part: tk.Event):
+        if len(self.ManualValue.get()) == 0:
+            self.apply_text = f"'{self.__get_rgb(self.ColorRedInput, self.ColorGreenInput, self.ColorBlueInput)}'"
+            try:
+                part.widget.configure({self.selected: self.apply_text.replace("'", "")})
+                self.changed_widgets[self.var_name_data][self.selected] = str(part.widget[self.selected])
+            except tk.TclError:
+                tkm.showwarning("Designer", f"it looks like {self.selected} cannot be set for this widget")
+        else:
+            self.apply_text = self.ManualValue.get()
+            try:
+                try:
+                    part.widget[self.selected] = self.ManualValue.get()
+                except IndexError:
+                    pass
+                self.changed_widgets[self.var_name_data][self.selected] = str(part.widget[self.selected])
+            except tk.TclError:
+                tkm.showwarning("Designer", f"it looks like {self.selected} cannot be set for this widget or"
+                                            f" \'{self.ManualValue.get()}\' cannot be set for {self.selected}")
+
+    def __un_select(self):
         try:
             self.Color.configure(background="black")
         except tk.TclError:
@@ -189,38 +253,94 @@ class Designer:
         self.ColorBlueInput.delete(0, tk.END)
         self.ColorBlueInput.insert(0, "0")
         self.ApplyButton.configure(command=None)
+        self.selected = ""
 
-    def save(self, name="default"):
+    def __save(self, name="default"):
         try:
             mkdir("themes")
         except FileExistsError:
             pass
         with open(f"themes/{name}.json", "w") as file:
-            json.dump(self.changed_widgets, file)
+            json.dump(self.changed_widgets, file, indent=4)
+        tkm.showinfo("Designer", "your theme was saved!")
 
-    def load(self):
+    def load(self, variables_to_change: dict, path=".", customWidgets=None):
+        """
+
+        load theme to widgets
+
+        :param customWidgets: which widget is custom widget
+        :param path: full path of folder
+        :param variables_to_change: widgets you want to apply style to them
+        :return:
+        """
+        if customWidgets is None:
+            customWidgets = []
         give = False
         try:
-            with open(f"themes/{self.name}.json") as file:
+            with open(f"{path}/themes/{self.name}.json") as file:
                 data = json.load(file)
-            for i in data:
-                for ii in data[i]:
-                    if ii not in self.identifiers:
-                        raise UnknownIdentifier(f"Identifier \"{ii}\" was not found! To get all"
-                                                          f" identifiers"
-                                                          f" use print(tkinter_expansion.identifiers())")
             for x, y in data.items():
                 self.changed_widgets[x] = {}
                 for a, b in y.items():
                     self.changed_widgets[x][a] = str(b)
-            return data
+                    self.changed_widgets[x][a] = str(b)
+            for value in variables_to_change:
+                if value in customWidgets:
+                    for i in data[value]:
+                        try:
+                            variables_to_change[value][i] = data[value][i]
+                            variables_to_change[value].kwd[i] = data[value][i]
+                        except tk.TclError:
+                            continue
+                if isinstance(variables_to_change[value], list):
+                    for index, val in enumerate(variables_to_change[value]):
+                        try:
+                            val.configure(data[value])
+                        except tk.TclError:
+                            pass
+                else:
+                    try:
+                        variables_to_change[value].configure(data[value])
+                    except tk.TclError:
+                        for i in data[value]:
+                            try:
+                                variables_to_change[value][i] = data[value][i]
+                            except tk.TclError:
+                                continue
         except FileNotFoundError:
             give = True
         if give:
             raise DesignerThemeNotFound(f"Theme with name {self.name} was not found in themes folder!")
 
     def set_theme_name(self, name="default"):
+        """
+
+        :param name: put name of theme you want to load
+        :return:
+        """
         self.name = name
+
+    def bind(self, widget):
+        """
+
+        :param widget: widget you want to bind to designer
+        :return:
+        """
+        if self.show:
+            widget.bind("<Button-3>", lambda event: self.__select_widget(event))
+            widget.bind_all("<Escape>", lambda event: self.__un_select())
+
+    def bind_to(self, widgets: list):
+        """
+
+        :param widgets: input widgets in list you want to bind to designer
+        :return:
+        """
+        for i in widgets:
+            if self.show:
+                i.bind("<Button-3>", lambda event: self.__select_widget(event))
+                i.bind_all("<Escape>", lambda event: self.__un_select())
 
 
 def rgb_to_hex(red: int, green: int, blue: int) -> str:
@@ -251,26 +371,30 @@ def hex_to_rgb(hex_color: str) -> tuple:
     :param hex_color: hex color value
     :return: rgb value from hex color
     """
-    return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
+    try:
+        return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
+    except ValueError:
+        tkm.showwarning("Designer", f"It's not possible for me to convert {hex_color} to RGB")
+        return 0, 0, 0
 
 
-def _get_var_by_id(id_of_var, global_share):
-    return [x for x in list(global_share.values()) if id(x) == id_of_var]
+def bind_help(panel, text, timeout):
+    """
 
-
-def _get_var_by_name(var_data, shared_locals):
-    return [x for x, y in shared_locals.items() if y == var_data]
-
-
-def bind_help(panel, text):
-    panel.bind("<Enter>", lambda _: panel.after(500, _show_hint(panel, text=text)))
+    :param panel: widget you want to show hint on
+    :param text: help message
+    :param timeout: show after specific time in ms
+    :return:
+    """
+    panel.bind("<Enter>", lambda _: panel.after(timeout, __show_hint(panel, text=text)))
+    unbind_help(panel)
 
 
 def unbind_help(panel):
-    panel.bind("<Leave>", lambda _: _hide_hint())
+    panel.bind("<Leave>", lambda _: __hide_hint())
 
 
-def _show_hint(panel, text: str):
+def __show_hint(panel, text: str):
     global tmp_top, tmp_top_label
     x = y = 0
     x += panel.winfo_rootx() + 25
@@ -282,22 +406,8 @@ def _show_hint(panel, text: str):
     tmp_top_label.pack(ipadx=1)
 
 
-def identifiers():
-    identifiers2 = {"color": "background",
-                    "bordercolor": "highlightbackground",
-                    "bordercolorwidth": "highlightthickness",
-                    "activecolor": "activebackground",
-                    "textcolor": "foreground",
-                    "activetextcolor": "activeforeground",
-                    "disabledtextcolor": "disabledforeground",
-                    "activebordercolor": "highlightcolor"}
-    identifiers = [i for i in identifiers2]
-    for a in identifiers2.values():
-        identifiers.append(a)
-    return f"All supported identifiers: {', '.join(identifiers)}."
-
-
-def _hide_hint():
+def __hide_hint():
     global tmp_top_label, tmp_top
-    tmp_top_label.destroy()
-    tmp_top.destroy()
+    if tmp_top is not None and tmp_top_label is not None:
+        tmp_top_label.destroy()
+        tmp_top.destroy()

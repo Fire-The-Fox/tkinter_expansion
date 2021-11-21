@@ -1,6 +1,5 @@
 from os import mkdir
 import json
-from .Identifiers import UnknownIdentifier
 
 
 class CssWrapperMissingFile(Exception):
@@ -58,9 +57,6 @@ class StyleManager:
                     if new_a not in identifiers:
                         if "#" in new_a or "." in new_a:
                             raise CssWrapperMissingChar("isn't { missing?")
-                        raise UnknownIdentifier(f"Identifier \"{new_a}\" was not found! To get all"
-                                                          f" identifiers"
-                                                          f" use print(tkinter_expansion.identifiers())")
                     try:
                         if ";" not in i.split(":")[1]:
                             print(f"Warning: Missing ; in line {line}")
