@@ -19,6 +19,7 @@ class Designer:
 
     You can also use Designer as theme manager.
     """
+
     def __init__(self, *args, **kwargs) -> None:
         """
 
