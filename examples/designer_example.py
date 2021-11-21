@@ -8,7 +8,8 @@ root.configure(width=700, height=700)
 
 # designer
 
-designer = tke.Designer(master=root, share_locals=locals(), share_globals=globals(), show=True)
+designer = tke.Designer(master=root, share_locals=locals(), share_globals=globals(),
+                        show=True)
 designer.set_theme_name()
 theme_data = designer.load()
 
