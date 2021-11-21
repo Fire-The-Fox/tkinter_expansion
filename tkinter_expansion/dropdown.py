@@ -48,11 +48,8 @@ class Dropdown(tk.Button):
         self["text"] = self.kw["text"] + " ▼"
         for i in self.labels:
             i.place_forget()
-        if not self.kw["pack_cmd"] is None:
-            try:
-                self.kw["pack_cmd"]()
-            except TypeError:
-                print(f"{self.kw['pack_cmd']} is not function!")
+        if callable(self.kw["pack_cmd"]):
+            self.kw["pack_cmd"]()
 
     def set_value(self, value: str):
         if isinstance(self.kw["variable"], tk.StringVar):
