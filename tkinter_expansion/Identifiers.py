@@ -1,5 +1,0 @@
-
-
-class UnknownIdentifier(Exception):
-    pass
-
