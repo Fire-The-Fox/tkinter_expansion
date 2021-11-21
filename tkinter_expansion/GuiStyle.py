@@ -2,20 +2,6 @@ from os import mkdir
 import json
 
 
-class CssWrapperMissingFile(Exception):
-    """This exception is raised when CssWrapper didn't find specific css file."""
-
-    pass
-
-
-class CssWrapperMissingChar(Exception):
-    """
-    This exception is raised when you forget specific character in your css file.
-    """
-
-    pass
-
-
 class StyleManager:
     """StyleManager allows you to return json data from css file."""
     def __init__(self, *args, **kwargs):
@@ -38,8 +24,7 @@ class StyleManager:
                 raise_file = True
 
             if raise_file:
-                raise CssWrapperMissingFile(f"File named {self.kwargs['css_file']} was "
-                                            f"not found!")
+                raise Exception(f"File named {self.kwargs['css_file']} was not found!")
             new_i = ""
             line = 0
             for i in css_data:
@@ -55,7 +40,7 @@ class StyleManager:
                     self.json_data[new_i] = {}
                 else:
                     if len(i.strip()) == 0:
-                        raise CssWrapperMissingChar("isn't } missing?")
+                        raise Exception("isn't } missing?")
                     new_a = i.split(":")[0].strip(" ")
                     try:
                         if ";" not in i.split(":")[1]:
@@ -65,9 +50,9 @@ class StyleManager:
                     except IndexError:
                         raise_error = True
                     if raise_error:
-                        raise CssWrapperMissingChar("isn't } missing?")
+                        raise Exception("isn't } missing?")
             return self.json_data
-        raise CssWrapperMissingFile("Css file is missing!")
+        raise Exception("Css file is missing!")
 
     def css_to_theme(self, name="css_theme"):
         """

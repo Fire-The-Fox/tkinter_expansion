@@ -9,12 +9,6 @@ tmp_top_label = None
 tmp_top = None
 
 
-class DesignerThemeNotFound(Exception):
-    """ This exception is raised when Designer didn't find specific theme. """
-
-    pass
-
-
 class Designer:
     """
 
@@ -405,8 +399,8 @@ class Designer:
         except FileNotFoundError:
             give = True
         if give:
-            raise DesignerThemeNotFound(f"Theme with name {self.name} was not found in"
-                                        f" themes folder!")
+            raise Exception(f"Theme with name {self.name} was not found in "
+                            "themes folder!")
 
     def set_theme_name(self, name="default"):
         """
