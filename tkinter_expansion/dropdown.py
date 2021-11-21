@@ -2,6 +2,12 @@ import tkinter as tk
 
 
 class Dropdown(tk.Button):
+    """
+
+    Tkinker's OptionMenu class is sometimes really weird and can't be customized
+
+    With this class you can easily manipulate look of every element of Dropdown menu.
+    """
     def __init__(self, **kwargs):
 
         self.kw = {"master": None, "text": kwargs["data"][0], "data": [],
@@ -22,6 +28,11 @@ class Dropdown(tk.Button):
         self.kw["variable"].set(self.kw["data"][0])
 
     def unpack(self):
+        """
+
+        Function unpack generates elements and it also gives functionality of Dropdown
+
+        """
         self["text"] = self.kw["text"] + " ▲"
         self["command"] = self.pack_data
         y = self.winfo_y() + self.winfo_height()
@@ -44,6 +55,11 @@ class Dropdown(tk.Button):
                     x += data.winfo_width()
 
     def pack_data(self):
+        """
+
+        Hides every other elements of Dropdown.
+
+        """
         self["command"] = self.unpack
         self["text"] = self.kw["text"] + " ▼"
         for i in self.labels:
@@ -52,6 +68,12 @@ class Dropdown(tk.Button):
             self.kw["pack_cmd"]()
 
     def set_value(self, value: str):
+        """
+
+        Function set_value sets value of specific StringVar variable
+
+        :param value: Which value to set for variable
+        """
         if isinstance(self.kw["variable"], tk.StringVar):
             self.kw["variable"].set(value)
             self.pack_data()
@@ -59,11 +81,22 @@ class Dropdown(tk.Button):
             self["text"] = self.kw["variable"].get() + " ▼"
 
     def redraw_top(self):
+        """
+
+        This function will redraw top part of Dropdown widget.
+
+        """
         self.kw["text"] = self.kw["data"][0]
         self["text"] = self.kw["text"] + " ▼"
         self.kw["variable"].set(self.kw["data"][0])
 
     def configure_values(self, **kwargs):
+        """
+
+        With this function it's easier to modify Dropdown widget.
+
+        :param kwargs:  things to be configured
+        """
         self.kw.update(kwargs)
         for i in self.kw:
             if i in ["variable", "data", "master", "maximum", "pack_cmd", "name"]:

@@ -3,20 +3,35 @@ import json
 
 
 class CssWrapperMissingFile(Exception):
+    """
+    This exception is raised when CssWrapper didn't find specific css file.
+    """
     pass
 
 
 class CssWrapperMissingChar(Exception):
+    """
+    This exception is raised when you forget specific character in your css file.
+    """
     pass
 
 
 class StyleManager:
+    """
+
+    StyleManager allows you to return json data from css file.
+    """
     def __init__(self, *args, **kwargs):
         self.kwargs = {"css_file": None}
         self.kwargs.update(kwargs)
         self.json_data = {}
 
     def load_css(self):
+        """
+
+        Function load_css basically converts css to json.
+        :return:
+        """
         if self.kwargs["css_file"] is not None:
             raise_file = False
             try:
@@ -58,6 +73,12 @@ class StyleManager:
         raise CssWrapperMissingFile("Css file is missing!")
 
     def css_to_theme(self, name="css_theme"):
+        """
+
+        Cave css as theme.
+
+        :param name: name of theme to which you want to save.
+        """
         try:
             mkdir("themes")
         except FileExistsError:

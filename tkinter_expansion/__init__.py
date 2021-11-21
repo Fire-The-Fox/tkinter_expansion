@@ -10,10 +10,22 @@ tmp_top = None
 
 
 class DesignerThemeNotFound(Exception):
+    """
+    This exception is raised when Designer didn't find specific theme.
+    """
     pass
 
 
 class Designer:
+    """
+
+    With Designer class you are able to change color values and widget behaviour  while
+    your app is running.
+
+    when you are done you can set show to False
+
+    You can also use Designer as theme manager.
+    """
     def __init__(self, *args, **kwargs) -> None:
         """
 
@@ -23,7 +35,7 @@ class Designer:
         """
         self.selected = ""
         self.changed_widgets = {}
-        self.rgb_value = None
+        self.rgb_value = [0, 0, 0]
         self.var_data = None
         self.name = "default"
         self.var_name_data = None
@@ -172,17 +184,33 @@ class Designer:
         self.show = self.kwargs["show"]
 
     def __change_color_example(self):
+        """
+
+        This private function is used to change example color background.
+        :return: rgb values
+        """
         self.Color["bg"] = \
             self.__get_rgb(self.ColorRedInput, self.ColorGreenInput,
                            self.ColorBlueInput)
 
     def __manual_color_change(self):
+        """
+
+        This private function is setting example color from ManualValue entry
+        """
         try:
             self.Color.configure(background=self.ManualValue.get())
         except tk.TclError:
             pass
 
     def __get_rgb(self, *args: tk.Entry):
+        """
+
+        This private function is getting values from entries and converting them to hex.
+
+        :param args: Entry from which to get RGB value
+        :return: hex color returned from rgb values
+        """
         final_values = []
         for i in args:
             self._term_i = i.get()
@@ -193,6 +221,13 @@ class Designer:
         return rgb_to_hex(final_values[0], final_values[1], final_values[2])
 
     def __select_widget(self, part: tk.Event):
+        """
+
+        This private function is used to configure Designer to work with widget that
+        is going to be selected.
+
+        :param part: widget which is going to be selected
+        """
         if self.__un_select():
             return
         self.EditDropdown.kw["pack_cmd"] = \
@@ -238,6 +273,14 @@ class Designer:
         self.SaveButton.configure(command=lambda: self.__save(self.name))
 
     def __modify_parts(self, part: tk.Event, value: str):
+        """
+
+        This private function will change some specific values of selected widget.
+
+        :param part: widget to change behaviour
+        :param value: selected widget
+        :return:
+        """
         self.selected = value
         self.ColorRedInput["state"] = "disabled"
         self.ColorGreenInput["state"] = "disabled"
@@ -273,6 +316,11 @@ class Designer:
                                             f"cannot be set for {self.selected}")
 
     def __un_select(self):
+        """
+
+        This private function takes everything to the defaults.
+        :return:
+        """
         try:
             self.Color.configure(background="black")
         except tk.TclError:
@@ -289,6 +337,12 @@ class Designer:
         return None
 
     def __save(self, name="default"):
+        """
+
+        This private function saves current theme into themes folder.
+
+        :param name: name of the theme
+        """
         try:
             mkdir("themes")
         except FileExistsError:
@@ -299,8 +353,7 @@ class Designer:
 
     def load(self, variables_to_change: dict, path=".", customWidgets=None):
         """
-
-        load theme to widgets
+        Load theme to widgets
 
         :param customWidgets: which widget is custom widget
         :param path: full path of folder
